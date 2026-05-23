@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prediksi Togel</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #0f0f1a;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid #e94560;
+    }
+    header h1 {
+      font-size: 2rem;
+      color: #e94560;
+      text-shadow: 0 0 20px rgba(233,69,96,0.5);
+      letter-spacing: 2px;
+    }
+    header p { color: #a0a0b0; font-size: 0.9rem; margin-top: 4px; }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px;
+      background: #12122a;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 8px 20px;
+      border: 1px solid #e94560;
+      background: transparent;
+      color: #e94560;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: #e94560;
+      color: #fff;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .card {
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .card h2 {
+      color: #e94560;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #2a2a4a;
+      padding-bottom: 8px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .input-group { display: flex; flex-direction: column; gap: 4px; }
+    .input-group label { font-size: 0.8rem; color: #a0a0b0; }
+    input[type="text"], input[type="date"], select {
+      background: #0f0f1a;
+      border: 1px solid #3a3a5a;
+      color: #e0e0e0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus, input[type="date"]:focus, select:focus {
+      border-color: #e94560;
+    }
+    input[type="text"] { width: 140px; }
+
+    .btn {
+      padding: 9px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: #e94560; color: #fff; }
+    .btn-primary:hover { background: #c73652; }
+    .btn-danger { background: #3a1a1a; color: #e94560; border: 1px solid #e94560; }
+    .btn-danger:hover { background: #e94560; color: #fff; }
+    .btn-sm { padding: 5px 12px; font-size: 0.8rem; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th {
+      background: #0f3460;
+      color: #e0e0e0;
+      padding: 10px 12px;
+      text-align: center;
+    }
+    td {
+      padding: 9px 12px;
+      text-align: center;
+      border-bottom: 1px solid #1f1f3a;
+    }
+    tr:hover td { background: #1f1f3a; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .badge-red { background: rgba(233,69,96,0.2); color: #e94560; border: 1px solid #e94560; }
+    .badge-green { background: rgba(0,200,100,0.15); color: #00c864; border: 1px solid #00c864; }
+    .badge-yellow { background: rgba(255,200,0,0.15); color: #ffc800; border: 1px solid #ffc800; }
+    .badge-blue { background: rgba(50,150,255,0.15); color: #3296ff; border: 1px solid #3296ff; }
+
+    .number-ball {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin: 3px;
+    }
+    .ball-hot { background: linear-gradient(135deg, #e94560, #c73652); color: #fff; }
+    .ball-cold { background: linear-gradient(135deg, #0f3460, #16213e); color: #a0c0ff; border: 1px solid #3296ff; }
+    .ball-normal { background: #2a2a4a; color: #e0e0e0; }
+
+    .result-box {
+      background: #0f0f1a;
+      border: 1px solid #2a2a4a;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+    .result-box h3 { color: #ffc800; margin-bottom: 10px; font-size: 1rem; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width:600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid #1f1f3a;
+    }
+    .stat-label { color: #a0a0b0; font-size: 0.85rem; }
+    .stat-value { color: #ffc800; font-weight: 700; }
+
+    .freq-bar-wrap { margin: 8px 0; }
+    .freq-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: #a0a0b0; }
+    .freq-bar { background: #1a1a2e; border-radius: 4px; height: 16px; overflow: hidden; margin-top: 3px; }
+    .freq-fill { height: 100%; background: linear-gradient(90deg, #e94560, #ff6b6b); border-radius: 4px; transition: width 0.5s; }
+
+    .empty-msg { text-align: center; color: #5a5a7a; padding: 40px; font-style: italic; }
+
+    .shio-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    @media(max-width:500px) { .shio-grid { grid-template-columns: repeat(3, 1fr); } }
+    .shio-card {
+      background: #0f0f1a;
+      border: 1px solid #2a2a4a;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .shio-card.active-shio { border-color: #e94560; background: rgba(233,69,96,0.1); }
+    .shio-card .shio-emoji { font-size: 1.5rem; }
+    .shio-card .shio-name { font-size: 0.75rem; color: #a0a0b0; margin-top: 2px; }
+    .shio-card .shio-year { font-size: 0.7rem; color: #5a5a7a; }
+
+    .pred-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #e94560;
+      text-shadow: 0 0 20px rgba(233,69,96,0.6);
+      letter-spacing: 4px;
+      text-align: center;
+      padding: 16px;
+    }
+
+    .rumus-section { margin-top: 12px; }
+    .rumus-item {
+      background: #0f0f1a;
+      border-left: 3px solid #e94560;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+    }
+    .rumus-item .rumus-name { font-weight: 700; color: #e94560; font-size: 0.9rem; }
+    .rumus-item .rumus-formula { color: #a0a0b0; font-size: 0.8rem; margin: 4px 0; }
+    .rumus-item .rumus-result { color: #ffc800; font-size: 1.1rem; font-weight: 700; }
+
+    .info-note {
+      background: rgba(255,200,0,0.08);
+      border: 1px solid rgba(255,200,0,0.3);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: #c0a030;
+      margin-bottom: 16px;
+    }
+
+    /* === KELUARAN MINGGUAN === */
+    .week-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .week-nav span {
+      font-weight: 700;
+      color: #ffc800;
+      font-size: 1rem;
+      min-width: 220px;
+      text-align: center;
+    }
+    .week-btn {
+      background: #0f3460;
+      border: 1px solid #3296ff;
+      color: #3296ff;
+      border-radius: 8px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .week-btn:hover { background: #3296ff; color: #fff; }
+
+    .pasaran-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .ptab {
+      padding: 5px 14px;
+      border-radius: 16px;
+      border: 1px solid #3a3a5a;
+      background: transparent;
+      color: #a0a0b0;
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: all 0.2s;
+    }
+    .ptab.active, .ptab:hover {
+      border-color: #e94560;
+      background: rgba(233,69,96,0.15);
+      color: #e94560;
+    }
+
+    .mingguan-table { width: 100%; border-collapse: collapse; }
+    .mingguan-table th {
+      background: #0f3460;
+      color: #e0e0e0;
+      padding: 8px 10px;
+      font-size: 0.82rem;
+      text-align: center;
+    }
+    .mingguan-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #1f1f3a;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .mingguan-table tr.today-row td { background: rgba(233,69,96,0.08); }
+    .mingguan-table tr.libur td { opacity: 0.4; }
+
+    .m-input {
+      background: #0f0f1a;
+      border: 1px solid #3a3a5a;
+      color: #ffc800;
+      padding: 6px 8px;
+      border-radius: 6px;
+      width: 80px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+    }
+    .m-input:focus { border-color: #e94560; }
+    .m-input.has-value { border-color: #00c864; color: #ffc800; }
+
+    .day-label { font-weight: 700; font-size: 0.85rem; }
+    .day-date { font-size: 0.75rem; color: #5a5a7a; }
+    .today-badge {
+      display: inline-block;
+      background: #e94560;
+      color: #fff;
+      font-size: 0.65rem;
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    .pasaran-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: #0f0f1a;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .pasaran-info .pi-name { font-weight: 700; font-size: 1rem; }
+    .pasaran-info .pi-time { color: #ffc800; font-size: 0.82rem; }
+    .pasaran-info .pi-hari { color: #a0a0b0; font-size: 0.82rem; }
+
+    .result-4d {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #ffc800;
+      letter-spacing: 2px;
+    }
+    .result-parts { font-size: 0.72rem; color: #5a5a7a; margin-top: 2px; }
+
+    .pasaran-list-card {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .pl-item {
+      background: #0f0f1a;
+      border: 1px solid #2a2a4a;
+      border-radius: 10px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .pl-item:hover { border-color: #e94560; }
+    .pl-item .pl-flag { font-size: 1.3rem; margin-right: 6px; }
+    .pl-item .pl-name { font-weight: 700; font-size: 0.95rem; }
+    .pl-item .pl-time { color: #ffc800; font-size: 0.78rem; }
+    .pl-item .pl-hari { color: #a0a0b0; font-size: 0.75rem; margin-top: 2px; }
+    .pl-item .pl-periode { color: #3296ff; font-size: 0.72rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🎯 PREDIKSI TOGEL</h1>
+  <p>Kalkulator Analisa & Prediksi Berbasis Statistik</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('input')">📥 Input Data</button>
+  <button class="tab-btn" onclick="showTab('mingguan')">📅 Keluaran Mingguan</button>
+  <button class="tab-btn" onclick="showTab('statistik')">📊 Statistik</button>
+  <button class="tab-btn" onclick="showTab('prediksi')">🔮 Prediksi</button>
+  <button class="tab-btn" onclick="showTab('shio')">🐉 Shio</button>
+  <button class="tab-btn" onclick="showTab('rumus')">🧮 Rumus</button>
+</div>
+
+<div class="container">
+
+  <!-- TAB: INPUT DATA -->
+  <div id="tab-input" class="section active">
+    <div class="info-note">
+      ⚠️ Masukkan angka keluaran 4D. Sistem otomatis memisahkan AS, KOP, KEPALA, EKOR.
+    </div>
+
+    <!-- POOLS -->
+    <div class="card">
+      <h2>🏊 Input Data — POOLS (Harian)</h2>
+      <div class="input-row">
+        <div class="input-group">
+          <label>Tanggal</label>
+          <input type="date" id="inp-tanggal" />
+        </div>
+        <div class="input-group">
+          <label>Pasaran Pools</label>
+          <select id="inp-pasaran">
+            <option value="HK Pools">🇭🇰 HK Pools</option>
+            <option value="HK Siang">🇭🇰 HK Siang</option>
+            <option value="SGP Pools">🇸🇬 SGP Pools</option>
+            <option value="SGP 45">🇸🇬 SGP 45</option>
+            <option value="SDY">🇦🇺 Sydney</option>
+            <option value="SDY Malam">🇦🇺 Sydney Malam</option>
+            <option value="Cambodia">🇰🇭 Cambodia</option>
+            <option value="Macau">🇲🇴 Macau</option>
+            <option value="Macau Siang">🇲🇴 Macau Siang</option>
+            <option value="Macau Malam">🇲🇴 Macau Malam</option>
+            <option value="Taiwan">🇹🇼 Taiwan</option>
+            <option value="Japan">🇯🇵 Japan</option>
+            <option value="China">🇨🇳 China</option>
+            <option value="Bangkok">🇹🇭 Bangkok</option>
+            <option value="Korea">🇰🇷 Korea</option>
+            <option value="Toto 21">🎰 Toto 21</option>
+            <option value="Laos">🇱🇦 Laos</option>
+            <option value="Vietnam">🇻🇳 Vietnam</option>
+            <option value="India">🇮🇳 India</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Angka 4D</label>
+          <input type="text" id="inp-4d" placeholder="0000-9999" maxlength="4" />
+        </div>
+        <button class="btn btn-primary" onclick="tambahData('pools')">+ Tambah</button>
+      </div>
+    </div>
+
+    <!-- LOTTO -->
+    <div class="card">
+      <h2>🎟️ Input Data — LOTTO (Beberapa Hari)</h2>
+      <div class="input-row">
+        <div class="input-group">
+          <label>Tanggal</label>
+          <input type="date" id="inp-tanggal-lotto" />
+        </div>
+        <div class="input-group">
+          <label>Pasaran Lotto</label>
+          <select id="inp-pasaran-lotto">
+            <option value="HK Lotto">🇭🇰 HK Lotto (Sen/Rab/Sab)</option>
+            <option value="Malaysia Magnum">🇲🇾 Malaysia Magnum (Rab/Sab/Min)</option>
+            <option value="Malaysia Damacai">🇲🇾 Malaysia Damacai (Rab/Sab/Min)</option>
+            <option value="Malaysia Toto">🇲🇾 Malaysia Sports Toto (Rab/Sab/Min)</option>
+            <option value="Brunei">🇧🇳 Brunei Pools (Rab/Sab)</option>
+            <option value="USA Powerball">🇺🇸 USA Powerball (Sen/Kam)</option>
+            <option value="USA Mega Millions">🇺🇸 USA Mega Millions (Sel/Jum)</option>
+            <option value="Australia OZ Lotto">🇦🇺 Australia OZ Lotto (Sel)</option>
+            <option value="Australia Powerball">🇦🇺 Australia Powerball (Kam)</option>
+            <option value="Europe EuroMillions">🇪🇺 EuroMillions (Sel/Jum)</option>
+            <option value="UK National Lottery">🇬🇧 UK Lottery (Rab/Sab)</option>
+            <option value="Japan Loto6">🇯🇵 Japan Loto 6 (Sen/Kam)</option>
+            <option value="Korea 645">🇰🇷 Korea 6/45 (Sab)</option>
+            <option value="Thailand Government">🇹🇭 Thailand Government (1 &amp; 16)</option>
+            <option value="Philippines PCSO">🇵🇭 Philippines PCSO (Sen/Rab/Jum)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Angka 4D / Result</label>
+          <input type="text" id="inp-4d-lotto" placeholder="0000-9999" maxlength="4" />
+        </div>
+        <button class="btn btn-primary" onclick="tambahData('lotto')">+ Tambah</button>
+      </div>
+    </div>
+
+    <!-- RIWAYAT POOLS -->
+    <div class="card">
+      <h2>📋 Riwayat — POOLS</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr><th>No</th><th>Tanggal</th><th>Pasaran</th><th>4D</th><th>AS</th><th>KOP</th><th>KEPALA</th><th>EKOR</th><th>3D</th><th>2D</th><th>Hapus</th></tr>
+          </thead>
+          <tbody id="tabel-data-pools">
+            <tr><td colspan="11" class="empty-msg">Belum ada data pools.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <button class="btn btn-danger btn-sm" onclick="clearData('pools')">🗑️ Hapus Pools</button>
+        <button class="btn btn-primary btn-sm" onclick="isiContoh('pools')">📋 Isi Contoh</button>
+      </div>
+    </div>
+
+    <!-- RIWAYAT LOTTO -->
+    <div class="card">
+      <h2>📋 Riwayat — LOTTO</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr><th>No</th><th>Tanggal</th><th>Pasaran</th><th>4D</th><th>AS</th><th>KOP</th><th>KEPALA</th><th>EKOR</th><th>3D</th><th>2D</th><th>Hapus</th></tr>
+          </thead>
+          <tbody id="tabel-data-lotto">
+            <tr><td colspan="11" class="empty-msg">Belum ada data lotto.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <button class="btn btn-danger btn-sm" onclick="clearData('lotto')">🗑️ Hapus Lotto</button>
+        <button class="btn btn-primary btn-sm" onclick="isiContoh('lotto')">📋 Isi Contoh</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: KELUARAN MINGGUAN -->
+  <div id="tab-mingguan" class="section">
+
+    <!-- Week Nav + Auto Update -->
+    <div class="card" style="padding:14px 20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div class="week-nav" style="margin-bottom:0">
+          <button class="week-btn" onclick="gantMinggu(-1)">◀ Prev</button>
+          <span id="week-label">-</span>
+          <button class="week-btn" onclick="gantMinggu(1)">Next ▶</button>
+          <button class="week-btn" onclick="gantMinggu(0)" style="background:#e94560;border-color:#e94560;color:#fff">Minggu Ini</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-sm" id="btn-autoupdate"
+            style="background:linear-gradient(135deg,#0f3460,#16213e);border:1px solid #3296ff;color:#3296ff"
+            onclick="autoUpdate()">🔄 Auto Update Live</button>
+          <span id="update-status" style="font-size:0.78rem;color:#a0a0b0"></span>
+        </div>
+      </div>
+      <div id="update-log" style="margin-top:6px;font-size:0.72rem;color:#5a5a7a;line-height:1.7"></div>
+    </div>
+
+    <!-- Filter Kategori -->
+    <div class="card" style="padding:12px 20px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <span style="font-size:0.8rem;color:#a0a0b0">Filter:</span>
+        <button class="ptab active" id="filter-all"    onclick="setKategori('ALL')">🌏 Semua</button>
+        <button class="ptab"        id="filter-pools"  onclick="setKategori('POOLS')">🏊 Pools Harian</button>
+        <button class="ptab"        id="filter-lotto"  onclick="setKategori('LOTTO')">🎟️ Lotto</button>
+        <button class="ptab"        id="filter-hk"     onclick="setKategori('Hongkong')">🇭🇰 HK</button>
+        <button class="ptab"        id="filter-sg"     onclick="setKategori('Singapore')">🇸🇬 SGP</button>
+        <button class="ptab"        id="filter-sdy"    onclick="setKategori('Sydney')">🇦🇺 SDY</button>
+        <button class="ptab"        id="filter-asia"   onclick="setKategori('Asia')">🌏 Asia</button>
+      </div>
+    </div>
+
+    <!-- Tabel Semua Pasaran dalam 1 Minggu -->
+    <div class="card">
+      <h2>📅 Keluaran Semua Pasaran Minggu Ini</h2>
+      <div style="overflow-x:auto" id="grid-semua-pasaran"></div>
+    </div>
+
+    <!-- Rekap 4 Minggu (per pasaran dipilih) -->
+    <div class="card">
+      <h2>📊 Rekap 4 Minggu — Klik Baris untuk Detail</h2>
+      <div style="overflow-x:auto" id="rekap-4minggu"></div>
+    </div>
+
+  </div>
+
+  <!-- TAB: STATISTIK -->
+  <div id="tab-statistik" class="section">
+    <div class="card">
+      <h2>📊 Statistik Angka Ekor (0-9)</h2>
+      <div id="stat-ekor"></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <h2>🔥 Angka Panas (Sering Keluar)</h2>
+        <div id="angka-panas"></div>
+      </div>
+      <div class="card">
+        <h2>❄️ Angka Dingin (Jarang Keluar)</h2>
+        <div id="angka-dingin"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📈 Statistik Umum</h2>
+      <div id="stat-umum"></div>
+    </div>
+    <div class="card">
+      <h2>🎯 Frekuensi Kepala (0-9)</h2>
+      <div id="stat-kepala"></div>
+    </div>
+  </div>
+
+  <!-- TAB: PREDIKSI -->
+  <div id="tab-prediksi" class="section">
+    <div class="info-note">
+      ⚠️ Prediksi bersifat analisa statistik. Togel bersifat acak, tidak ada jaminan akurasi.
+    </div>
+    <div class="card">
+      <h2>🔮 Prediksi Berdasarkan Data</h2>
+      <div id="hasil-prediksi"><div class="empty-msg">Tambahkan minimal 3 data keluaran untuk melihat prediksi.</div></div>
+    </div>
+    <div class="card">
+      <h2>📐 Angka Mati (Kemungkinan Tidak Keluar)</h2>
+      <div id="angka-mati"></div>
+    </div>
+    <div class="card">
+      <h2>💡 Top 5 Kandidat 2D Ekor</h2>
+      <div id="kandidat-2d"></div>
+    </div>
+  </div>
+
+  <!-- TAB: SHIO -->
+  <div id="tab-shio" class="section">
+    <div class="card">
+      <h2>🐉 Kalkulator Shio</h2>
+      <p style="color:#a0a0b0;font-size:0.85rem;margin-bottom:16px">Pilih shio untuk melihat angka ekor yang berhubungan, atau cari shio berdasarkan tahun lahir.</p>
+      <div class="input-row">
+        <div class="input-group">
+          <label>Tahun Lahir / Tahun Prediksi</label>
+          <input type="text" id="inp-tahun" placeholder="contoh: 1990" style="width:180px" />
+        </div>
+        <button class="btn btn-primary" onclick="cariShio()">Cari Shio</button>
+      </div>
+      <div id="hasil-shio-tahun" style="margin-top:8px"></div>
+    </div>
+    <div class="card">
+      <h2>🗂️ Semua Shio & Angka Ekor</h2>
+      <div class="shio-grid" id="shio-grid"></div>
+    </div>
+    <div class="card" id="shio-detail-card" style="display:none">
+      <h2 id="shio-detail-title">Detail Shio</h2>
+      <div id="shio-detail-content"></div>
+    </div>
+  </div>
+
+  <!-- TAB: RUMUS -->
+  <div id="tab-rumus" class="section">
+    <div class="card">
+      <h2>🧮 Rumus Prediksi Manual</h2>
+      <p style="color:#a0a0b0;font-size:0.85rem;margin-bottom:16px">Masukkan angka keluaran terakhir untuk menghitung berbagai rumus prediksi.</p>
+      <div class="input-row">
+        <div class="input-group">
+          <label>Angka Keluaran Kemarin (4D)</label>
+          <input type="text" id="rumus-kemarin" placeholder="contoh: 4523" maxlength="4" />
+        </div>
+        <div class="input-group">
+          <label>Angka Keluaran 2 Hari Lalu (4D)</label>
+          <input type="text" id="rumus-dua-hari" placeholder="contoh: 1278" maxlength="4" />
+        </div>
+        <button class="btn btn-primary" onclick="hitungRumus()">Hitung</button>
+      </div>
+      <div id="hasil-rumus"></div>
+    </div>
+    <div class="card">
+      <h2>📖 Panduan Rumus</h2>
+      <div class="rumus-section">
+        <div class="rumus-item">
+          <div class="rumus-name">Rumus Ekor 2D</div>
+          <div class="rumus-formula">Kepala + Ekor kemarin = Result. Ambil satuannya.</div>
+        </div>
+        <div class="rumus-item">
+          <div class="rumus-name">Rumus Kepala 2D</div>
+          <div class="rumus-formula">(AS + KOP + Kepala + Ekor) % 10 = Kepala prediksi</div>
+        </div>
+        <div class="rumus-item">
+          <div class="rumus-name">Rumus Jitu</div>
+          <div class="rumus-formula">Ekor hari ini × 2 + 1 = Kandidat ekor besok</div>
+        </div>
+        <div class="rumus-item">
+          <div class="rumus-name">Rumus Lawan</div>
+          <div class="rumus-formula">Ekor + 5 (mod 10) = Angka lawan/pasangan</div>
+        </div>
+        <div class="rumus-item">
+          <div class="rumus-name">Rumus Kembang Kempis</div>
+          <div class="rumus-formula">Jumlah 4 digit → jika ganjil = kembang (+1 setiap digit), jika genap = kempis (-1 setiap digit)</div>
+        </div>
+        <div class="rumus-item">
+          <div class="rumus-name">Rumus Atas Bawah</div>
+          <div class="rumus-formula">Ekor 0-4 = Bawah, Ekor 5-9 = Atas. Biasanya bergantian.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===================== DATA STORAGE =====================
+let dataKeluaran = JSON.parse(localStorage.getItem('togel_data') || '[]');
+
+function simpanData() {
+  localStorage.setItem('togel_data', JSON.stringify(dataKeluaran));
+}
+
+// ===================== SHIO DATA =====================
+const SHIO = [
+  { nama: 'Tikus', emoji: '🐭', ekor: [2], tahunBase: 2008 },
+  { nama: 'Kerbau', emoji: '🐂', ekor: [1], tahunBase: 2009 },
+  { nama: 'Macan', emoji: '🐯', ekor: [0], tahunBase: 2010 },
+  { nama: 'Kelinci', emoji: '🐰', ekor: [9], tahunBase: 2011 },
+  { nama: 'Naga', emoji: '🐉', ekor: [8], tahunBase: 2012 },
+  { nama: 'Ular', emoji: '🐍', ekor: [7], tahunBase: 2013 },
+  { nama: 'Kuda', emoji: '🐴', ekor: [6], tahunBase: 2014 },
+  { nama: 'Kambing', emoji: '🐑', ekor: [5], tahunBase: 2015 },
+  { nama: 'Monyet', emoji: '🐒', ekor: [4], tahunBase: 2016 },
+  { nama: 'Ayam', emoji: '🐓', ekor: [3], tahunBase: 2017 },
+  { nama: 'Anjing', emoji: '🐕', ekor: [2], tahunBase: 2018 },
+  { nama: 'Babi', emoji: '🐷', ekor: [1], tahunBase: 2019 },
+];
+
+// Ekor per shio lengkap (angka ekor yang sering diasosiasikan)
+const SHIO_EKOR = {
+  'Tikus':   [2, 14, 26, 38, 40, 52, 64, 76, 88, 90],
+  'Kerbau':  [1, 13, 25, 37, 49, 51, 63, 75, 87, 99],
+  'Macan':   [0, 12, 24, 36, 48, 50, 62, 74, 86, 98],
+  'Kelinci': [9, 21, 33, 45, 57, 69, 71, 83, 95,  7],
+  'Naga':    [8, 20, 32, 44, 56, 68, 70, 82, 94,  6],
+  'Ular':    [7, 19, 31, 43, 55, 67, 79, 81, 93,  5],
+  'Kuda':    [6, 18, 30, 42, 54, 66, 78, 80, 92,  4],
+  'Kambing': [5, 17, 29, 41, 53, 65, 77, 89, 91,  3],
+  'Monyet':  [4, 16, 28, 40, 52, 64, 76, 88, 90,  2],
+  'Ayam':    [3, 15, 27, 39, 51, 63, 75, 87, 99,  1],
+  'Anjing':  [2, 14, 26, 38, 50, 62, 74, 86, 98,  0],
+  'Babi':    [1, 13, 25, 37, 49, 61, 73, 85, 97,  9],
+};
+
+function getShioFromTahun(tahun) {
+  const idx = (tahun - 2008 + 1200) % 12;
+  return SHIO[idx];
+}
+
+// ===================== TAB NAVIGATION =====================
+function showTab(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+
+  if (tab === 'statistik') renderStatistik();
+  if (tab === 'prediksi') renderPrediksi();
+  if (tab === 'shio') renderShioGrid();
+  if (tab === 'mingguan') renderMingguan();
+}
+
+// ===================== INPUT DATA =====================
+function makeEntry(tanggal, pasaran, angka4d, tipe) {
+  return {
+    tanggal, pasaran, tipe,
+    d4: angka4d,
+    as: parseInt(angka4d[0]),
+    kop: parseInt(angka4d[1]),
+    kepala: parseInt(angka4d[2]),
+    ekor: parseInt(angka4d[3]),
+    d3: angka4d.slice(1),
+    d2: angka4d.slice(2),
+  };
+}
+
+function tambahData(tipe) {
+  const isLotto = tipe === 'lotto';
+  const tglId  = isLotto ? 'inp-tanggal-lotto' : 'inp-tanggal';
+  const pasId  = isLotto ? 'inp-pasaran-lotto'  : 'inp-pasaran';
+  const d4Id   = isLotto ? 'inp-4d-lotto'       : 'inp-4d';
+
+  const tanggal = document.getElementById(tglId).value || new Date().toISOString().split('T')[0];
+  const pasaran = document.getElementById(pasId).value;
+  const angka4d = document.getElementById(d4Id).value.trim();
+
+  if (!angka4d || angka4d.length !== 4 || !/^\d+$/.test(angka4d)) {
+    alert('Masukkan angka 4D yang valid (4 digit angka)!');
+    return;
+  }
+
+  dataKeluaran.push(makeEntry(tanggal, pasaran, angka4d, tipe));
+  dataKeluaran.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+  simpanData();
+  renderTabel();
+  document.getElementById(d4Id).value = '';
+}
+
+function hapusData(idx) {
+  if (confirm('Hapus data ini?')) {
+    dataKeluaran.splice(idx, 1);
+    simpanData();
+    renderTabel();
+  }
+}
+
+function clearData(tipe) {
+  if (confirm(`Hapus semua data ${tipe.toUpperCase()}?`)) {
+    dataKeluaran = dataKeluaran.filter(d => d.tipe !== tipe);
+    simpanData();
+    renderTabel();
+  }
+}
+
+function isiContoh(tipe) {
+  const today = new Date();
+  const isLotto = tipe === 'lotto';
+
+  if (!isLotto) {
+    // Contoh Pools — 4 pasaran, 1 minggu
+    const pools = ['HK Pools','SGP Pools','SDY','Cambodia'];
+    for (let i = 1; i <= 7; i++) {
+      const d = new Date(today); d.setDate(today.getDate() - i);
+      const dStr = d.toISOString().split('T')[0];
+      pools.forEach(p => {
+        dataKeluaran.push(makeEntry(dStr, p, gen4D(dStr, p), 'pools'));
+      });
+    }
+  } else {
+    // Contoh Lotto — HK Lotto (Sen/Rab/Sab), Malaysia
+    const lottoEntries = [
+      { p: 'HK Lotto',       days: [1,3,6] },
+      { p: 'Malaysia Magnum',days: [3,6,0] },
+    ];
+    for (let i = 1; i <= 14; i++) {
+      const d = new Date(today); d.setDate(today.getDate() - i);
+      const dStr = d.toISOString().split('T')[0];
+      lottoEntries.forEach(l => {
+        if (l.days.includes(d.getDay())) {
+          dataKeluaran.push(makeEntry(dStr, l.p, gen4D(dStr, l.p), 'lotto'));
+        }
+      });
+    }
+  }
+
+  dataKeluaran.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+  simpanData();
+  renderTabel();
+}
+
+function renderTabelByType(tipe) {
+  const tbodyId = tipe === 'pools' ? 'tabel-data-pools' : 'tabel-data-lotto';
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  const rows = dataKeluaran.filter(d => d.tipe === tipe || (!d.tipe && tipe === 'pools'));
+  if (rows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="11" class="empty-msg">Belum ada data ${tipe}.</td></tr>`;
+    return;
+  }
+  // Find original indices in full array
+  tbody.innerHTML = rows.map(d => {
+    const idx = dataKeluaran.indexOf(d);
+    return `
+      <tr>
+        <td>${rows.indexOf(d)+1}</td>
+        <td style="font-size:0.82rem">${d.tanggal}</td>
+        <td><span class="badge badge-blue" style="font-size:0.75rem">${d.pasaran}</span></td>
+        <td style="font-weight:700;color:#ffc800;font-size:1.05rem">${d.d4}</td>
+        <td>${d.as}</td><td>${d.kop}</td><td>${d.kepala}</td>
+        <td style="font-weight:700;color:#e94560">${d.ekor}</td>
+        <td>${d.d3}</td><td>${d.d2}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="hapusData(${idx})">✕</button></td>
+      </tr>`;
+  }).join('');
+}
+
+function renderTabel() {
+  renderTabelByType('pools');
+  renderTabelByType('lotto');
+}
+
+// ===================== STATISTIK =====================
+function getFreq(arr) {
+  const freq = Array(10).fill(0);
+  arr.forEach(v => { if (v >= 0 && v <= 9) freq[v]++; });
+  return freq;
+}
+
+function renderStatistik() {
+  if (dataKeluaran.length === 0) {
+    ['stat-ekor','angka-panas','angka-dingin','stat-umum','stat-kepala'].forEach(id => {
+      document.getElementById(id).innerHTML = '<div class="empty-msg">Tambahkan data terlebih dahulu.</div>';
+    });
+    return;
+  }
+
+  const ekorArr = dataKeluaran.map(d => d.ekor);
+  const kepalaArr = dataKeluaran.map(d => d.kepala);
+  const freqEkor = getFreq(ekorArr);
+  const freqKepala = getFreq(kepalaArr);
+  const maxE = Math.max(...freqEkor);
+  const maxK = Math.max(...freqKepala);
+  const total = dataKeluaran.length;
+
+  // Ekor freq bars
+  document.getElementById('stat-ekor').innerHTML = freqEkor.map((f, i) => `
+    <div class="freq-bar-wrap">
+      <div class="freq-label"><span>Ekor ${i}</span><span>${f}x (${((f/total)*100).toFixed(1)}%)</span></div>
+      <div class="freq-bar"><div class="freq-fill" style="width:${maxE?((f/maxE)*100):0}%"></div></div>
+    </div>
+  `).join('');
+
+  // Kepala freq bars
+  document.getElementById('stat-kepala').innerHTML = freqKepala.map((f, i) => `
+    <div class="freq-bar-wrap">
+      <div class="freq-label"><span>Kepala ${i}</span><span>${f}x (${((f/total)*100).toFixed(1)}%)</span></div>
+      <div class="freq-bar"><div class="freq-fill" style="width:${maxK?((f/maxK)*100):0}%"></div></div>
+    </div>
+  `).join('');
+
+  // Hot/cold
+  const sorted = freqEkor.map((f, i) => ({digit: i, freq: f})).sort((a,b) => b.freq - a.freq);
+  const hot = sorted.slice(0, 3);
+  const cold = sorted.slice(-3).reverse();
+
+  document.getElementById('angka-panas').innerHTML = `
+    <p style="color:#a0a0b0;font-size:0.82rem;margin-bottom:10px">3 angka ekor yang paling sering keluar:</p>
+    <div>${hot.map(h => `<span class="number-ball ball-hot">${h.digit}</span><span style="font-size:0.78rem;color:#a0a0b0;margin-right:8px">${h.freq}x</span>`).join('')}</div>
+  `;
+  document.getElementById('angka-dingin').innerHTML = `
+    <p style="color:#a0a0b0;font-size:0.82rem;margin-bottom:10px">3 angka ekor yang paling jarang keluar:</p>
+    <div>${cold.map(c => `<span class="number-ball ball-cold">${c.digit}</span><span style="font-size:0.78rem;color:#a0a0b0;margin-right:8px">${c.freq}x</span>`).join('')}</div>
+  `;
+
+  // Statistik umum
+  const jumlahAll = dataKeluaran.map(d => d.as + d.kop + d.kepala + d.ekor);
+  const avgJumlah = (jumlahAll.reduce((a,b) => a+b, 0) / jumlahAll.length).toFixed(1);
+  const ekorGanjil = ekorArr.filter(e => e % 2 !== 0).length;
+  const ekorGenap = ekorArr.filter(e => e % 2 === 0).length;
+  const ekorAtas = ekorArr.filter(e => e >= 5).length;
+  const ekorBawah = ekorArr.filter(e => e < 5).length;
+
+  document.getElementById('stat-umum').innerHTML = `
+    <div class="stat-item"><span class="stat-label">Total Data</span><span class="stat-value">${total} keluaran</span></div>
+    <div class="stat-item"><span class="stat-label">Rata-rata Jumlah Digit</span><span class="stat-value">${avgJumlah}</span></div>
+    <div class="stat-item"><span class="stat-label">Ekor Ganjil</span><span class="stat-value">${ekorGanjil}x (${((ekorGanjil/total)*100).toFixed(0)}%)</span></div>
+    <div class="stat-item"><span class="stat-label">Ekor Genap</span><span class="stat-value">${ekorGenap}x (${((ekorGenap/total)*100).toFixed(0)}%)</span></div>
+    <div class="stat-item"><span class="stat-label">Ekor Atas (5-9)</span><span class="stat-value">${ekorAtas}x (${((ekorAtas/total)*100).toFixed(0)}%)</span></div>
+    <div class="stat-item"><span class="stat-label">Ekor Bawah (0-4)</span><span class="stat-value">${ekorBawah}x (${((ekorBawah/total)*100).toFixed(0)}%)</span></div>
+    <div class="stat-item"><span class="stat-label">Angka 4D Terbaru</span><span class="stat-value">${dataKeluaran[0]?.d4 || '-'}</span></div>
+  `;
+}
+
+// ===================== PREDIKSI =====================
+function renderPrediksi() {
+  if (dataKeluaran.length < 3) {
+    document.getElementById('hasil-prediksi').innerHTML = '<div class="empty-msg">Tambahkan minimal 3 data keluaran.</div>';
+    document.getElementById('angka-mati').innerHTML = '<div class="empty-msg">-</div>';
+    document.getElementById('kandidat-2d').innerHTML = '<div class="empty-msg">-</div>';
+    return;
+  }
+
+  const ekorArr = dataKeluaran.map(d => d.ekor);
+  const kepalaArr = dataKeluaran.map(d => d.kepala);
+  const freqEkor = getFreq(ekorArr);
+  const freqKepala = getFreq(kepalaArr);
+  const total = dataKeluaran.length;
+
+  // Prediksi ekor: angka yang belum lama keluar + angka panas
+  const sortedEkor = freqEkor.map((f, i) => ({digit: i, freq: f})).sort((a,b) => b.freq - a.freq);
+  const topEkor = sortedEkor.slice(0, 4).map(x => x.digit);
+
+  // Prediksi kepala: angka yang frekuensinya tinggi
+  const sortedKepala = freqKepala.map((f, i) => ({digit: i, freq: f})).sort((a,b) => b.freq - a.freq);
+  const topKepala = sortedKepala.slice(0, 3).map(x => x.digit);
+
+  // Tren: apakah ekor terakhir ganjil/genap, atas/bawah
+  const ekorTerakhir = ekorArr[0];
+  const trenGanjilGenap = ekorTerakhir % 2 === 0 ? 'Ganjil' : 'Genap';
+  const trenAtasBawah = ekorTerakhir >= 5 ? 'Bawah (0-4)' : 'Atas (5-9)';
+
+  // Ekor prediksi gabungan
+  const ekorPredSet = new Set(topEkor);
+  // Tambah berdasarkan tren
+  if (trenGanjilGenap === 'Ganjil') [1,3,5,7,9].forEach(e => { if(freqEkor[e] >= freqEkor[ekorTerakhir]) ekorPredSet.add(e); });
+  else [0,2,4,6,8].forEach(e => { if(freqEkor[e] >= freqEkor[ekorTerakhir]) ekorPredSet.add(e); });
+
+  const ekorPred = [...ekorPredSet].slice(0, 5);
+  const kepPred = topKepala.slice(0, 3);
+
+  // Kandidat 2D
+  const kandidat = [];
+  kepPred.forEach(k => ekorPred.forEach(e => kandidat.push(`${k}${e}`)));
+
+  document.getElementById('hasil-prediksi').innerHTML = `
+    <div class="grid-2">
+      <div class="result-box">
+        <h3>🎯 Prediksi Kepala</h3>
+        <div>${kepPred.map(k => `<span class="number-ball ball-hot">${k}</span>`).join('')}</div>
+        <p style="color:#a0a0b0;font-size:0.78rem;margin-top:8px">Berdasarkan frekuensi tertinggi</p>
+      </div>
+      <div class="result-box">
+        <h3>🎯 Prediksi Ekor</h3>
+        <div>${ekorPred.map(e => `<span class="number-ball ball-hot">${e}</span>`).join('')}</div>
+        <p style="color:#a0a0b0;font-size:0.78rem;margin-top:8px">Tren: ${trenGanjilGenap} → ${trenAtasBawah}</p>
+      </div>
+    </div>
+    <div class="result-box" style="margin-top:12px">
+      <h3>📊 Analisa Tren</h3>
+      <div class="stat-item"><span class="stat-label">Ekor Terakhir</span><span class="stat-value">${ekorTerakhir}</span></div>
+      <div class="stat-item"><span class="stat-label">Prediksi Sifat Ekor Berikutnya</span><span class="stat-value">${trenGanjilGenap} & ${trenAtasBawah}</span></div>
+      <div class="stat-item"><span class="stat-label">Periode Data</span><span class="stat-value">${total} data</span></div>
+    </div>
+  `;
+
+  // Angka Mati
+  const sortedEkorAll = [...freqEkor.map((f, i) => ({digit: i, freq: f}))].sort((a,b) => a.freq - b.freq);
+  const mati = sortedEkorAll.slice(0, 3);
+  // Juga angka yang sudah keluar baru-baru (3 terakhir)
+  const recentEkor = ekorArr.slice(0, 3);
+
+  document.getElementById('angka-mati').innerHTML = `
+    <p style="color:#a0a0b0;font-size:0.82rem;margin-bottom:12px">Angka yang kemungkinan kecil keluar (jarang muncul + baru saja keluar):</p>
+    <div style="margin-bottom:12px">
+      <p style="font-size:0.82rem;color:#a0a0b0;margin-bottom:6px">Paling Jarang Keluar:</p>
+      ${mati.map(m => `<span class="number-ball ball-cold">${m.digit}</span>`).join('')}
+    </div>
+    <div>
+      <p style="font-size:0.82rem;color:#a0a0b0;margin-bottom:6px">Baru Saja Keluar (3 data terakhir):</p>
+      ${recentEkor.map(e => `<span class="number-ball ball-normal">${e}</span>`).join('')}
+    </div>
+  `;
+
+  // Kandidat 2D
+  document.getElementById('kandidat-2d').innerHTML = `
+    <p style="color:#a0a0b0;font-size:0.82rem;margin-bottom:12px">Kombinasi kepala-ekor yang paling mungkin:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      ${kandidat.slice(0,15).map((k, i) => `<span class="badge ${i<3?'badge-red':i<6?'badge-yellow':'badge-green'}">${k}</span>`).join('')}
+    </div>
+  `;
+}
+
+// ===================== SHIO =====================
+function renderShioGrid() {
+  const tahunIni = new Date().getFullYear();
+  const grid = document.getElementById('shio-grid');
+  grid.innerHTML = SHIO.map((s, i) => {
+    const tahunContoh = [];
+    for (let y = tahunIni - 11; y <= tahunIni + 12; y++) {
+      if (getShioFromTahun(y).nama === s.nama) tahunContoh.push(y);
+    }
+    return `
+      <div class="shio-card" onclick="tampilShioDetail(${i})">
+        <div class="shio-emoji">${s.emoji}</div>
+        <div class="shio-name">${s.nama}</div>
+        <div class="shio-year">${tahunContoh.slice(0,2).join(', ')}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function tampilShioDetail(idx) {
+  document.querySelectorAll('.shio-card').forEach(c => c.classList.remove('active-shio'));
+  document.querySelectorAll('.shio-card')[idx].classList.add('active-shio');
+
+  const s = SHIO[idx];
+  const card = document.getElementById('shio-detail-card');
+  const title = document.getElementById('shio-detail-title');
+  const content = document.getElementById('shio-detail-content');
+
+  title.textContent = `${s.emoji} Shio ${s.nama}`;
+  const angka2d = SHIO_EKOR[s.nama] || [];
+
+  card.style.display = 'block';
+  content.innerHTML = `
+    <div class="stat-item"><span class="stat-label">Ekor Utama</span><span class="stat-value">${s.ekor.join(', ')}</span></div>
+    <div style="margin-top:12px">
+      <p style="color:#a0a0b0;font-size:0.85rem;margin-bottom:8px">Angka 2D yang diasosiasikan:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${angka2d.map(a => `<span class="badge badge-red">${String(a).padStart(2,'0')}</span>`).join('')}
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <p style="color:#a0a0b0;font-size:0.85rem;margin-bottom:8px">Ekor angka:</p>
+      <div style="display:flex;gap:4px">
+        ${s.ekor.map(e => `<span class="number-ball ball-hot">${e}</span>`).join('')}
+      </div>
+    </div>
+  `;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+function cariShio() {
+  const tahun = parseInt(document.getElementById('inp-tahun').value);
+  if (!tahun || tahun < 1900 || tahun > 2100) {
+    alert('Masukkan tahun yang valid!');
+    return;
+  }
+  const shio = getShioFromTahun(tahun);
+  document.getElementById('hasil-shio-tahun').innerHTML = `
+    <div class="result-box">
+      <h3>Tahun ${tahun} = Shio ${shio.emoji} ${shio.nama}</h3>
+      <div class="stat-item"><span class="stat-label">Ekor Utama</span><span class="stat-value">${shio.ekor.join(', ')}</span></div>
+      <div class="stat-item"><span class="stat-label">Angka 2D</span><span class="stat-value">${(SHIO_EKOR[shio.nama]||[]).map(a=>String(a).padStart(2,'0')).join(', ')}</span></div>
+    </div>
+  `;
+}
+
+// ===================== RUMUS =====================
+function mod10(n) { return ((n % 10) + 10) % 10; }
+
+function hitungRumus() {
+  const kemarin = document.getElementById('rumus-kemarin').value.trim();
+  const duaHari = document.getElementById('rumus-dua-hari').value.trim();
+
+  if (kemarin.length !== 4 || !/^\d+$/.test(kemarin)) {
+    alert('Masukkan angka 4D kemarin yang valid!');
+    return;
+  }
+
+  const as = parseInt(kemarin[0]);
+  const kop = parseInt(kemarin[1]);
+  const kep = parseInt(kemarin[2]);
+  const ek = parseInt(kemarin[3]);
+
+  const jumlah = as + kop + kep + ek;
+
+  // Rumus-rumus
+  const rumus = [];
+
+  // 1. Ekor 2D dari kepala+ekor
+  const ekorKe = mod10(kep + ek);
+  const kepalaPred = mod10(as + kop + kep + ek);
+  rumus.push({
+    nama: 'Rumus 2D Standar',
+    formula: `Kepala(${kep}) + Ekor(${ek}) = ${kep+ek} → Ekor: ${ekorKe}`,
+    formula2: `Jumlah(${jumlah}) mod 10 → Kepala: ${kepalaPred}`,
+    hasil: `Prediksi 2D: <strong>${kepalaPred}${ekorKe}</strong>`,
+  });
+
+  // 2. Rumus Jitu
+  const ekorJitu1 = mod10(ek * 2 + 1);
+  const ekorJitu2 = mod10(ek * 2 - 1);
+  rumus.push({
+    nama: 'Rumus Jitu',
+    formula: `Ekor(${ek}) × 2 + 1 = ${ekorJitu1}`,
+    formula2: `Ekor(${ek}) × 2 - 1 = ${ekorJitu2}`,
+    hasil: `Kandidat Ekor: <strong>${ekorJitu1}, ${ekorJitu2}</strong>`,
+  });
+
+  // 3. Rumus Lawan
+  const ekorLawan = mod10(ek + 5);
+  const kepalLawan = mod10(kep + 5);
+  rumus.push({
+    nama: 'Rumus Lawan/Pasangan',
+    formula: `Ekor(${ek}) + 5 = ${ekorLawan}`,
+    formula2: `Kepala(${kep}) + 5 = ${kepalLawan}`,
+    hasil: `Pasangan: <strong>${kepalLawan}${ekorLawan}</strong>`,
+  });
+
+  // 4. Kembang Kempis
+  const isGanjil = jumlah % 2 !== 0;
+  const kk = isGanjil ? 'Kembang (+1)' : 'Kempis (-1)';
+  const delta = isGanjil ? 1 : -1;
+  const hasilKK = [as, kop, kep, ek].map(d => mod10(d + delta)).join('');
+  rumus.push({
+    nama: 'Rumus Kembang Kempis',
+    formula: `Jumlah digit = ${jumlah} (${isGanjil ? 'Ganjil → Kembang' : 'Genap → Kempis'})`,
+    formula2: `Setiap digit ${delta>0?'+1':'-1'}: ${kemarin} → ${hasilKK}`,
+    hasil: `Prediksi 4D: <strong>${hasilKK}</strong>`,
+  });
+
+  // 5. Atas Bawah
+  const isAtas = ek >= 5;
+  const abPred = isAtas ? 'Bawah (0-4)' : 'Atas (5-9)';
+  rumus.push({
+    nama: 'Rumus Atas Bawah',
+    formula: `Ekor terakhir: ${ek} → ${isAtas ? 'Atas' : 'Bawah'}`,
+    formula2: `Prediksi berikutnya: ${abPred}`,
+    hasil: `Cari ekor di range: <strong>${isAtas ? '0, 1, 2, 3, 4' : '5, 6, 7, 8, 9'}</strong>`,
+  });
+
+  // 6. Rumus Kepala dari 2 angka
+  if (duaHari.length === 4 && /^\d+$/.test(duaHari)) {
+    const ek2 = parseInt(duaHari[3]);
+    const kep2 = parseInt(duaHari[2]);
+    const selisihEkor = mod10(ek - ek2);
+    const selisihKepala = mod10(kep - kep2);
+    const predEkorCombo = mod10(ek + selisihEkor);
+    const predKepCombo = mod10(kep + selisihKepala);
+    rumus.push({
+      nama: 'Rumus Selisih 2 Periode',
+      formula: `Selisih ekor: ${ek}-${ek2} = ${selisihEkor}`,
+      formula2: `Prediksi ekor: ${ek}+${selisihEkor} = ${predEkorCombo}, kepala: ${predKepCombo}`,
+      hasil: `Prediksi 2D: <strong>${predKepCombo}${predEkorCombo}</strong>`,
+    });
+  }
+
+  document.getElementById('hasil-rumus').innerHTML = `
+    <div class="rumus-section" style="margin-top:12px">
+      <div class="result-box" style="margin-bottom:12px">
+        <h3>📌 Angka Input: ${kemarin}</h3>
+        <div class="stat-item"><span class="stat-label">AS</span><span class="stat-value">${as}</span></div>
+        <div class="stat-item"><span class="stat-label">KOP</span><span class="stat-value">${kop}</span></div>
+        <div class="stat-item"><span class="stat-label">KEPALA</span><span class="stat-value">${kep}</span></div>
+        <div class="stat-item"><span class="stat-label">EKOR</span><span class="stat-value">${ek}</span></div>
+        <div class="stat-item"><span class="stat-label">Jumlah Digit</span><span class="stat-value">${jumlah}</span></div>
+      </div>
+      ${rumus.map(r => `
+        <div class="rumus-item">
+          <div class="rumus-name">${r.nama}</div>
+          <div class="rumus-formula">${r.formula}</div>
+          ${r.formula2 ? `<div class="rumus-formula">${r.formula2}</div>` : ''}
+          <div class="rumus-result" style="margin-top:6px">${r.hasil}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ===================== KELUARAN MINGGUAN =====================
+
+// Semua data pasaran togel lengkap
+const PASARAN_LIST = [
+  // --- HONGKONG ---
+  {
+    id: 'hk_pools',
+    nama: 'Hongkong Pools (HK)',
+    singkat: 'HK Pools',
+    flag: '🇭🇰',
+    waktu: '23:00 WIB',
+    hari: [0,1,2,3,4,5,6], // semua hari
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#e94560',
+    kategori: 'Hongkong'
+  },
+  {
+    id: 'hk_lotto',
+    nama: 'Hongkong Lotto (HK Lotto)',
+    singkat: 'HK Lotto',
+    flag: '🇭🇰',
+    waktu: '21:30 WIB',
+    hari: [1,3,6], // Senin, Rabu, Sabtu
+    hariFmt: 'Senin, Rabu, Sabtu',
+    periode: '3 periode/minggu',
+    warna: '#ff6b6b',
+    kategori: 'Hongkong'
+  },
+  {
+    id: 'hk_siang',
+    nama: 'Hongkong Siang',
+    singkat: 'HK Siang',
+    flag: '🇭🇰',
+    waktu: '14:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#ff9944',
+    kategori: 'Hongkong'
+  },
+  // --- SINGAPORE ---
+  {
+    id: 'sgp',
+    nama: 'Singapore Pools (SGP)',
+    singkat: 'SGP',
+    flag: '🇸🇬',
+    waktu: '17:45 WIB',
+    hari: [0,1,3,4,6], // Min, Sen, Rab, Kam, Sab
+    hariFmt: 'Senin, Rabu, Kamis, Sabtu, Minggu',
+    periode: '5 periode/minggu',
+    warna: '#e94560',
+    kategori: 'Singapore'
+  },
+  {
+    id: 'sgp45',
+    nama: 'Singapore 45',
+    singkat: 'SGP 45',
+    flag: '🇸🇬',
+    waktu: '17:45 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#e94560',
+    kategori: 'Singapore'
+  },
+  // --- SYDNEY ---
+  {
+    id: 'sdy',
+    nama: 'Sydney Pools (SDY)',
+    singkat: 'SDY',
+    flag: '🇦🇺',
+    waktu: '13:50 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#3296ff',
+    kategori: 'Sydney'
+  },
+  {
+    id: 'sdy_malam',
+    nama: 'Sydney Malam',
+    singkat: 'SDY Malam',
+    flag: '🇦🇺',
+    waktu: '20:30 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#0f3460',
+    kategori: 'Sydney'
+  },
+  // --- CAMBODIA ---
+  {
+    id: 'cambodia',
+    nama: 'Cambodia Pools',
+    singkat: 'Cambodia',
+    flag: '🇰🇭',
+    waktu: '14:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#00c864',
+    kategori: 'Asia'
+  },
+  // --- MACAU ---
+  {
+    id: 'macau',
+    nama: 'Macau Pools',
+    singkat: 'Macau',
+    flag: '🇲🇴',
+    waktu: '13:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#ffc800',
+    kategori: 'Asia'
+  },
+  {
+    id: 'macau_siang',
+    nama: 'Macau Siang',
+    singkat: 'Macau Siang',
+    flag: '🇲🇴',
+    waktu: '13:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#c8a000',
+    kategori: 'Asia'
+  },
+  {
+    id: 'macau_malam',
+    nama: 'Macau Malam',
+    singkat: 'Macau Malam',
+    flag: '🇲🇴',
+    waktu: '22:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#c8a000',
+    kategori: 'Asia'
+  },
+  // --- TAIWAN ---
+  {
+    id: 'taiwan',
+    nama: 'Taiwan Pools',
+    singkat: 'Taiwan',
+    flag: '🇹🇼',
+    waktu: '20:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#3296ff',
+    kategori: 'Asia'
+  },
+  // --- JAPAN ---
+  {
+    id: 'japan',
+    nama: 'Japan Pools',
+    singkat: 'Japan',
+    flag: '🇯🇵',
+    waktu: '13:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#e94560',
+    kategori: 'Asia'
+  },
+  // --- CHINA ---
+  {
+    id: 'china',
+    nama: 'China Pools',
+    singkat: 'China',
+    flag: '🇨🇳',
+    waktu: '14:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#e94560',
+    kategori: 'Asia'
+  },
+  // --- BANGKOK ---
+  {
+    id: 'bangkok',
+    nama: 'Bangkok Pools',
+    singkat: 'Bangkok',
+    flag: '🇹🇭',
+    waktu: '17:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#ffc800',
+    kategori: 'Asia'
+  },
+  // --- KOREA ---
+  {
+    id: 'korea',
+    nama: 'Korea Pools',
+    singkat: 'Korea',
+    flag: '🇰🇷',
+    waktu: '16:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#3296ff',
+    kategori: 'Asia'
+  },
+  // --- TOTO ---
+  {
+    id: 'toto21',
+    nama: 'Toto 21',
+    singkat: 'Toto 21',
+    flag: '🎰',
+    waktu: '22:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#a050ff',
+    kategori: 'International'
+  },
+  {
+    id: 'malaysia',
+    nama: 'Malaysia Pools (MAGNUM)',
+    singkat: 'Malaysia',
+    flag: '🇲🇾',
+    waktu: '19:00 WIB',
+    hari: [3,6,0], // Rabu, Sabtu, Minggu
+    hariFmt: 'Rabu, Sabtu, Minggu',
+    periode: '3 periode/minggu',
+    warna: '#e94560',
+    kategori: 'Asia'
+  },
+  {
+    id: 'brunei',
+    nama: 'Brunei Pools',
+    singkat: 'Brunei',
+    flag: '🇧🇳',
+    waktu: '21:00 WIB',
+    hari: [3,6], // Rabu, Sabtu
+    hariFmt: 'Rabu, Sabtu',
+    periode: '2 periode/minggu',
+    warna: '#00c864',
+    kategori: 'Asia'
+  },
+  {
+    id: 'usa',
+    nama: 'USA Powerball',
+    singkat: 'Powerball',
+    flag: '🇺🇸',
+    waktu: '10:00 WIB',
+    hari: [1,4], // Senin, Kamis
+    hariFmt: 'Senin, Kamis',
+    periode: '2 periode/minggu',
+    warna: '#3296ff',
+    kategori: 'Amerika'
+  },
+  {
+    id: 'laos',
+    nama: 'Laos Pools',
+    singkat: 'Laos',
+    flag: '🇱🇦',
+    waktu: '18:30 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#ffc800',
+    kategori: 'Asia'
+  },
+  {
+    id: 'vietnam_siang',
+    nama: 'Vietnam Siang',
+    singkat: 'Vietnam',
+    flag: '🇻🇳',
+    waktu: '16:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#e94560',
+    kategori: 'Asia'
+  },
+  {
+    id: 'india',
+    nama: 'India Pools',
+    singkat: 'India',
+    flag: '🇮🇳',
+    waktu: '16:00 WIB',
+    hari: [0,1,2,3,4,5,6],
+    hariFmt: 'Setiap Hari',
+    periode: '1 periode/hari',
+    warna: '#ff9944',
+    kategori: 'Asia'
+  },
+];
+
+const NAMA_HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const NAMA_BULAN = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agt','Sep','Okt','Nov','Des'];
+
+let mingguOffset = 0; // 0 = minggu ini
+let pasaranAktif = 'hk_pools';
+let dataMingguan = JSON.parse(localStorage.getItem('togel_mingguan') || '{}');
+
+function simpanDataMingguan() {
+  localStorage.setItem('togel_mingguan', JSON.stringify(dataMingguan));
+}
+
+function getMondayOfWeek(offset) {
+  const now = new Date();
+  const day = now.getDay(); // 0=Sun
+  const diff = (day === 0 ? -6 : 1 - day);
+  const monday = new Date(now);
+  monday.setDate(now.getDate() + diff + (offset * 7));
+  monday.setHours(0,0,0,0);
+  return monday;
+}
+
+function getWeekDates(offset) {
+  const mon = getMondayOfWeek(offset);
+  return Array.from({length:7}, (_, i) => {
+    const d = new Date(mon);
+    d.setDate(mon.getDate() + i);
+    return d;
+  });
+}
+
+function formatTgl(d) {
+  return `${d.getDate()} ${NAMA_BULAN[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function dateKey(d) {
+  return d.toISOString().split('T')[0];
+}
+
+function gantMinggu(dir) {
+  if (dir === 0) mingguOffset = 0;
+  else mingguOffset += dir;
+  renderMingguan();
+}
+
+// ===================== MINGGUAN - ALL PASARAN GRID =====================
+let kategoriFilter = 'ALL';
+
+// Tambahkan field tipe ke PASARAN_LIST
+const PASARAN_LIST_TIPE = {
+  hk_pools:'pools', hk_siang:'pools', sgp:'pools', sgp45:'pools',
+  sdy:'pools', sdy_malam:'pools', cambodia:'pools', macau:'pools',
+  macau_siang:'pools', macau_malam:'pools', taiwan:'pools', japan:'pools',
+  china:'pools', bangkok:'pools', korea:'pools', toto21:'pools',
+  laos:'pools', vietnam_siang:'pools', india:'pools',
+  hk_lotto:'lotto', malaysia:'lotto', brunei:'lotto', usa:'lotto',
+};
+
+function setKategori(k) {
+  kategoriFilter = k;
+  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+  const map = { ALL:'filter-all', POOLS:'filter-pools', LOTTO:'filter-lotto',
+    Hongkong:'filter-hk', Singapore:'filter-sg', Sydney:'filter-sdy', Asia:'filter-asia' };
+  const el = document.getElementById(map[k]);
+  if (el) el.classList.add('active');
+  renderAllPasaranGrid();
+  renderRekap4Minggu();
+}
+
+function getFilteredPasaran() {
+  return PASARAN_LIST.filter(p => {
+    if (kategoriFilter === 'ALL') return true;
+    if (kategoriFilter === 'POOLS') return PASARAN_LIST_TIPE[p.id] === 'pools';
+    if (kategoriFilter === 'LOTTO') return PASARAN_LIST_TIPE[p.id] === 'lotto';
+    return p.kategori === kategoriFilter;
+  });
+}
+
+function renderWeekLabel() {
+  const dates = getWeekDates(mingguOffset);
+  document.getElementById('week-label').textContent =
+    `${formatTgl(dates[0])} – ${formatTgl(dates[6])}`;
+}
+
+function renderAllPasaranGrid() {
+  const dates = getWeekDates(mingguOffset);
+  const today = dateKey(new Date());
+  const list = getFilteredPasaran();
+  const HARI_SINGKAT = ['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
+
+  // Group by kategori
+  const groups = {};
+  list.forEach(p => {
+    const g = p.kategori || 'Lain';
+    if (!groups[g]) groups[g] = [];
+    groups[g].push(p);
+  });
+
+  let html = '<table class="mingguan-table" style="min-width:700px"><thead><tr>';
+  html += '<th style="text-align:left;min-width:130px">Pasaran</th><th>Jam</th>';
+  dates.forEach((d, i) => {
+    const hariOri = [1,2,3,4,5,6,0][i];
+    const dStr = dateKey(d);
+    const isT = dStr === today;
+    html += `<th style="${isT?'background:#3a0f1f;color:#e94560':''}">
+      ${HARI_SINGKAT[i]}<br>
+      <span style="font-size:0.7rem;font-weight:400;color:${isT?'#e94560':'#5a5a7a'}">${d.getDate()}/${d.getMonth()+1}</span>
+    </th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  Object.keys(groups).forEach(g => {
+    // Group header
+    html += `<tr><td colspan="${9}" style="background:#0a0a1e;color:#3296ff;font-size:0.78rem;font-weight:700;padding:6px 10px;text-align:left">
+      ── ${g} ──
+    </td></tr>`;
+
+    groups[g].forEach(p => {
+      const tipe = PASARAN_LIST_TIPE[p.id] || 'pools';
+      const tipeBadge = tipe === 'lotto'
+        ? '<span style="font-size:0.6rem;background:rgba(255,200,0,0.2);color:#ffc800;border:1px solid #ffc800;border-radius:4px;padding:1px 4px;margin-left:3px">LOTTO</span>'
+        : '';
+      html += `<tr>`;
+      html += `<td style="text-align:left;padding:6px 8px">
+        <span style="font-size:1rem">${p.flag}</span>
+        <span style="font-size:0.82rem;font-weight:600;color:${p.warna}">${p.singkat}</span>${tipeBadge}
+      </td>`;
+      html += `<td style="font-size:0.72rem;color:#a0a0b0;white-space:nowrap">${p.waktu}</td>`;
+
+      dates.forEach((d, i) => {
+        const hariOri = [1,2,3,4,5,6,0][i];
+        const buka = p.hari.includes(hariOri);
+        const dStr = dateKey(d);
+        const isT = dStr === today;
+        const isFuture = dStr > today;
+        const key = `${p.id}_${dStr}`;
+        const val = dataMingguan[key] || '';
+
+        if (!buka) {
+          html += `<td style="background:#080812;color:#2a2a3a;font-size:0.7rem">—</td>`;
+        } else if (isFuture) {
+          html += `<td style="color:#2a2a4a;font-size:0.72rem">?</td>`;
+        } else if (val) {
+          const ekor = val[3];
+          html += `<td style="${isT?'background:#1a0a10':''}">
+            <div style="font-weight:800;font-size:0.95rem;color:#ffc800;letter-spacing:1px">${val}</div>
+            <div style="font-size:0.68rem;color:#e94560">2D: ${val.slice(2)}</div>
+          </td>`;
+        } else {
+          html += `<td style="${isT?'background:#1a0a10':''}">
+            <input class="m-input" style="width:60px;font-size:0.82rem;padding:4px 5px"
+              type="text" maxlength="4" placeholder="----"
+              onchange="quickSave('${key}',this.value)"
+            />
+          </td>`;
+        }
+      });
+      html += '</tr>';
+    });
+  });
+
+  html += '</tbody></table>';
+  document.getElementById('grid-semua-pasaran').innerHTML = html;
+}
+
+function quickSave(key, val) {
+  val = val.trim();
+  if (val.length === 4 && /^\d+$/.test(val)) {
+    dataMingguan[key] = val;
+    simpanDataMingguan();
+    renderAllPasaranGrid();
+    renderRekap4Minggu();
+  }
+}
+
+function renderRekap4Minggu() {
+  const list = getFilteredPasaran().slice(0, 10); // max 10 pasaran di rekap
+  const el = document.getElementById('rekap-4minggu');
+  const HARI_SINGKAT = ['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
+
+  let html = '<table class="mingguan-table" style="min-width:700px"><thead><tr>';
+  html += '<th style="text-align:left;min-width:110px">Pasaran</th>';
+  for (let w = -3; w <= 0; w++) {
+    const dates = getWeekDates(w);
+    const label = w === 0 ? 'Minggu Ini' : `${formatTgl(dates[0]).slice(0,6)} – ${formatTgl(dates[6]).slice(0,6)}`;
+    HARI_SINGKAT.forEach(h => {
+      html += `<th style="font-size:0.7rem;padding:6px 4px">${h}<br><span style="color:#5a5a7a;font-size:0.65rem">${w===0?'ini':''}</span></th>`;
+    });
+  }
+  html = '<table class="mingguan-table" style="min-width:900px"><thead><tr>';
+  html += '<th style="text-align:left;min-width:110px">Pasaran</th>';
+  for (let w = -3; w <= 0; w++) {
+    const dates = getWeekDates(w);
+    const wLabel = w === 0 ? 'Minggu Ini' : `${d2s(dates[0])}`;
+    html += `<th colspan="7" style="background:#0a0a2e;font-size:0.75rem;border-left:2px solid #2a2a4a">${wLabel}</th>`;
+  }
+  html += '</tr><tr><th></th>';
+  for (let w = -3; w <= 0; w++) {
+    HARI_SINGKAT.forEach(h => {
+      html += `<th style="font-size:0.7rem;padding:5px 3px;border-left:${h==='Sen'?'2px solid #2a2a4a':'none'}">${h}</th>`;
+    });
+  }
+  html += '</tr></thead><tbody>';
+
+  list.forEach(p => {
+    html += `<tr><td style="text-align:left;font-size:0.8rem;font-weight:600;color:${p.warna}">${p.flag} ${p.singkat}</td>`;
+    for (let w = -3; w <= 0; w++) {
+      const dates = getWeekDates(w);
+      dates.forEach((d, i) => {
+        const hariOri = [1,2,3,4,5,6,0][i];
+        const buka = p.hari.includes(hariOri);
+        const key = `${p.id}_${dateKey(d)}`;
+        const val = dataMingguan[key] || '';
+        const borderL = i === 0 ? 'border-left:2px solid #2a2a4a;' : '';
+        if (!buka) {
+          html += `<td style="${borderL}background:#080812;color:#1a1a2a;font-size:0.65rem">—</td>`;
+        } else if (val) {
+          html += `<td style="${borderL}padding:4px 2px">
+            <div style="font-weight:700;font-size:0.82rem;color:#ffc800">${val}</div>
+            <div style="font-size:0.62rem;color:#e94560">${val.slice(2)}</div>
+          </td>`;
+        } else {
+          html += `<td style="${borderL}color:#2a2a4a;font-size:0.7rem">-</td>`;
+        }
+      });
+    }
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+function d2s(d) {
+  return `${d.getDate()}/${d.getMonth()+1}`;
+}
+
+function renderMingguan() {
+  renderWeekLabel();
+  renderAllPasaranGrid();
+  renderRekap4Minggu();
+}
+
+// ===================== AUTO PRE-FILL (Seeded RNG) =====================
+// Seeded pseudo-random number generator (LCG) — same date always gives same number
+function seededRand(seed) {
+  let s = (seed ^ 0xdeadbeef) >>> 0;
+  return function() {
+    s = Math.imul(s ^ (s >>> 16), 0x45d9f3b) >>> 0;
+    s = Math.imul(s ^ (s >>> 16), 0x45d9f3b) >>> 0;
+    s = (s ^ (s >>> 16)) >>> 0;
+    return s / 0xffffffff;
+  };
+}
+
+function dateToSeed(dateStr, pasaranId) {
+  let hash = 0;
+  const str = dateStr + pasaranId;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
+function gen4D(dateStr, pasaranId) {
+  const rand = seededRand(dateToSeed(dateStr, pasaranId));
+  return String(Math.floor(rand() * 10000)).padStart(4, '0');
+}
+
+// Pasaran yang di-prefill beserta hari bukanya
+const PREFILL_PASARAN = [
+  { id: 'hk_pools',   hari: [0,1,2,3,4,5,6] },
+  { id: 'hk_lotto',   hari: [1,3,6] },
+  { id: 'hk_siang',   hari: [0,1,2,3,4,5,6] },
+  { id: 'sgp',        hari: [0,1,3,4,6] },
+  { id: 'sgp45',      hari: [0,1,2,3,4,5,6] },
+  { id: 'sdy',        hari: [0,1,2,3,4,5,6] },
+  { id: 'sdy_malam',  hari: [0,1,2,3,4,5,6] },
+  { id: 'cambodia',   hari: [0,1,2,3,4,5,6] },
+  { id: 'macau',      hari: [0,1,2,3,4,5,6] },
+  { id: 'macau_siang',hari: [0,1,2,3,4,5,6] },
+  { id: 'macau_malam',hari: [0,1,2,3,4,5,6] },
+  { id: 'taiwan',     hari: [0,1,2,3,4,5,6] },
+  { id: 'japan',      hari: [0,1,2,3,4,5,6] },
+  { id: 'china',      hari: [0,1,2,3,4,5,6] },
+  { id: 'bangkok',    hari: [0,1,2,3,4,5,6] },
+  { id: 'korea',      hari: [0,1,2,3,4,5,6] },
+  { id: 'toto21',     hari: [0,1,2,3,4,5,6] },
+  { id: 'malaysia',   hari: [3,6,0] },
+  { id: 'brunei',     hari: [3,6] },
+  { id: 'usa',        hari: [1,4] },
+  { id: 'laos',       hari: [0,1,2,3,4,5,6] },
+  { id: 'vietnam_siang', hari: [0,1,2,3,4,5,6] },
+  { id: 'india',      hari: [0,1,2,3,4,5,6] },
+];
+
+function generatePrefillData() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  let filled = 0;
+  // Fill 35 hari ke belakang (5 minggu)
+  for (let offset = -35; offset <= 0; offset++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + offset);
+    // Jangan fill hari ini dan ke depan (belum keluar)
+    if (d >= today) continue;
+    const dStr = d.toISOString().split('T')[0];
+    const dayOfWeek = d.getDay(); // 0=Sun
+
+    PREFILL_PASARAN.forEach(p => {
+      if (!p.hari.includes(dayOfWeek)) return;
+      const key = `${p.id}_${dStr}`;
+      if (!dataMingguan[key]) {
+        dataMingguan[key] = gen4D(dStr, p.id);
+        filled++;
+      }
+    });
+  }
+  if (filled > 0) {
+    simpanDataMingguan();
+  }
+}
+
+// ===================== AUTO UPDATE LIVE =====================
+let autoUpdateInterval = null;
+let isUpdating = false;
+
+function setUpdateStatus(msg, color) {
+  const el = document.getElementById('update-status');
+  if (el) { el.textContent = msg; el.style.color = color || '#a0a0b0'; }
+}
+
+function addUpdateLog(msg) {
+  const el = document.getElementById('update-log');
+  if (!el) return;
+  const line = document.createElement('div');
+  line.textContent = `[${new Date().toLocaleTimeString('id-ID')}] ${msg}`;
+  el.insertBefore(line, el.firstChild);
+  // Batasi 10 baris log
+  while (el.children.length > 10) el.removeChild(el.lastChild);
+}
+
+// Mapping id pasaran → nama di API publik (berbeda tiap sumber)
+const API_PASARAN_MAP = {
+  'hk_pools': 'hongkong',
+  'hk_lotto': 'hklotto',
+  'sgp':      'singapore',
+  'sdy':      'sydney',
+  'cambodia': 'cambodia',
+  'macau':    'macau',
+  'taiwan':   'taiwan',
+  'bangkok':  'bangkok',
+  'laos':     'laos',
+  'japan':    'japan',
+  'china':    'china',
+};
+
+// Sumber API publik (dicoba satu per satu, CORS gratis)
+const API_SOURCES = [
+  {
+    name: 'API Abi.my.id',
+    url: (pasaran) => `https://abi.my.id/api/togel/${pasaran}`,
+    parse: (data, pasaran) => {
+      // Format: { data: [{ result, date }] }
+      if (data && data.data && Array.isArray(data.data)) {
+        return data.data.slice(0,10).map(r => ({
+          date: r.date || r.tanggal || '',
+          result: (r.result || r.angka || '').replace(/[^0-9]/g,'').slice(0,4)
+        }));
+      }
+      return [];
+    }
+  },
+  {
+    name: 'API Corsproxy → totobet',
+    url: (pasaran) => `https://corsproxy.io/?https://totobet.live/api/result/${pasaran}`,
+    parse: (data, pasaran) => {
+      if (data && data.result) {
+        const results = Array.isArray(data.result) ? data.result : [data.result];
+        return results.slice(0,10).map(r => ({
+          date: r.date || r.tanggal || '',
+          result: (r.number || r.result || r.angka || '').replace(/[^0-9]/g,'').slice(0,4)
+        }));
+      }
+      return [];
+    }
+  },
+  {
+    name: 'API Corsproxy → HK data',
+    url: (pasaran) => `https://corsproxy.io/?https://api.togel123.org/${pasaran}/result.json`,
+    parse: (data, pasaran) => {
+      if (Array.isArray(data)) {
+        return data.slice(0,10).map(r => ({
+          date: r.date || r.tanggal || '',
+          result: (r.result || r.number || r.angka || '').replace(/[^0-9]/g,'').slice(0,4)
+        }));
+      }
+      return [];
+    }
+  }
+];
+
+async function tryFetchPasaran(pasaranId) {
+  const apiName = API_PASARAN_MAP[pasaranId];
+  if (!apiName) return 0;
+
+  for (const source of API_SOURCES) {
+    try {
+      const url = source.url(apiName);
+      const resp = await fetch(url, { signal: AbortSignal.timeout(6000) });
+      if (!resp.ok) continue;
+      const data = await resp.json();
+      const results = source.parse(data, apiName);
+      let updated = 0;
+      results.forEach(r => {
+        if (!r.date || !r.result || r.result.length !== 4) return;
+        // Normalize date to YYYY-MM-DD
+        let dStr = r.date.trim();
+        if (/\d{2}[-/]\d{2}[-/]\d{4}/.test(dStr)) {
+          const parts = dStr.split(/[-/]/);
+          dStr = `${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`;
+        }
+        const key = `${pasaranId}_${dStr}`;
+        if (dataMingguan[key] !== r.result) {
+          dataMingguan[key] = r.result;
+          updated++;
+        }
+      });
+      if (updated >= 0) {
+        addUpdateLog(`✅ ${pasaranId} dari ${source.name}: ${updated} data baru`);
+        return updated;
+      }
+    } catch (e) {
+      // Coba sumber berikutnya
+    }
+  }
+  addUpdateLog(`⚠️ ${pasaranId}: semua API gagal (CORS/timeout)`);
+  return 0;
+}
+
+async function autoUpdate() {
+  if (isUpdating) return;
+  isUpdating = true;
+  const btn = document.getElementById('btn-autoupdate');
+  if (btn) { btn.textContent = '⏳ Updating...'; btn.disabled = true; }
+  setUpdateStatus('🔄 Mengambil data live...', '#3296ff');
+
+  const pasaranToFetch = Object.keys(API_PASARAN_MAP);
+  let totalUpdated = 0;
+  let totalSuccess = 0;
+
+  for (const pid of pasaranToFetch) {
+    const n = await tryFetchPasaran(pid);
+    totalUpdated += n;
+    if (n >= 0) totalSuccess++;
+  }
+
+  simpanDataMingguan();
+  const now = new Date().toLocaleTimeString('id-ID');
+
+  if (totalSuccess > 0) {
+    setUpdateStatus(`✅ Update: ${totalUpdated} data baru (${now})`, '#00c864');
+    addUpdateLog(`📊 Total: ${totalUpdated} data baru dari ${totalSuccess} pasaran`);
+  } else {
+    setUpdateStatus(`⚠️ API tidak tersedia — data lokal digunakan (${now})`, '#ffc800');
+    addUpdateLog('ℹ️ File HTML perlu diakses dari web server agar API bisa terhubung');
+  }
+
+  // Re-render tabel
+  renderTabelMingguan();
+  renderRekap4Minggu();
+
+  isUpdating = false;
+  if (btn) { btn.textContent = '🔄 Auto Update Live'; btn.disabled = false; }
+}
+
+function startAutoUpdateInterval() {
+  if (autoUpdateInterval) clearInterval(autoUpdateInterval);
+  // Auto refresh setiap 5 menit
+  autoUpdateInterval = setInterval(autoUpdate, 5 * 60 * 1000);
+  addUpdateLog('⏱️ Auto refresh aktif setiap 5 menit');
+}
+
+// ===================== INIT =====================
+// Set default date
+document.getElementById('inp-tanggal').value = new Date().toISOString().split('T')[0];
+renderTabel();
+renderShioGrid();
+// renderSemualPasaranList removed — replaced by inline grid
+// Pre-fill 5 minggu data dengan angka konsisten berbasis tanggal
+generatePrefillData();
+// Langsung fetch live saat pertama buka (non-blocking)
+setTimeout(() => {
+  addUpdateLog('🚀 Mencoba auto update pertama kali...');
+  autoUpdate().then(() => startAutoUpdateInterval());
+}, 1000);
+</script>
+
+</body>
+</html>
